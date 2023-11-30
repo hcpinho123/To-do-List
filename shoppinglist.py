@@ -22,6 +22,14 @@ class shoppingList(QMainWindow):
         self.item.setPlaceholderText("item")
         layout.addWidget(self.item)
         
+#         self.quantity = QLineEdit()
+#         self.quantity.setPlaceholderText("Quantity of items")
+#         layout.addWidget(self.quantity)
+#         
+#         self.expDate = QLineEdit()
+#         self.expDate.setPlaceholderText("Expiration Day")
+#         layout.addWidget(self.expDate)
+        
         addButton = QPushButton("Add!")
         addButton.clicked.connect(self.additem)
         self.item.returnPressed.connect(self.additem)
@@ -59,11 +67,22 @@ class shoppingList(QMainWindow):
         self.item.setText("")
                     
     def removeitem(self):
-        for item in self.shopping_list.selectedItems():
-            self.shopping_list.row(item)
+        selected_items = self.shopping_list.selectedItems()
+
+        if not selected_items:
+            return
+
+        with open('myfile.txt', 'r') as f:
+            lines = f.readlines()
+
+        with open('myfile.txt', 'w') as f:
+            for line in lines:
+                if line.strip() + '\n' not in [item.text() for item in selected_items]:
+                    f.write(line)
+
+        for item in selected_items:
             self.shopping_list.takeItem(self.shopping_list.row(item))
         
-
 if __name__ == "__main__":
     app = QApplication()
     window = shoppingList()
