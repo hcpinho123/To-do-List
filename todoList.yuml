@@ -1,0 +1,9 @@
+// {type:class}
+// {direction: topDown}
+// {generate: true}
+
+[LoginDialog|+user_credentials_file: str;-username_edit: QLineEdit;-password_edit: QLineEdit|+__init__(user_credentials_file='user_credentials.txt'): void;+register(): void;+login(): void;+username_exists(username: str): bool]
+[ToDoList|+task: QLineEdit;+deadline: QDateEdit;+details: QLineEdit;+priorities: QComboBox;+todo_list: QTableWidget|+__init__(): void;+additem(): void;+removeitem(): void;+saveToFile(): void]
+
+[QDialog]^-[LoginDialog]
+[QMainWindow]^-[ToDoList]
